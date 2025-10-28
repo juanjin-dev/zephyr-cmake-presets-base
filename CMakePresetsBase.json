@@ -1,0 +1,48 @@
+{
+    "version": 10,
+    "configurePresets": [
+        {
+            "name": "base",
+            "hidden": true,
+            "generator": "Ninja",
+            "binaryDir": "${fileDir}/build/${presetName}",
+            "cacheVariables": {
+                "NO_BUILD_TYPE_WARNING": "ON",
+                "EXTRA_ZEPHYR_MODULES": "${env:ZEPHYR_EXTRA_MODULES}",
+                "BOARD": "${env:BOARD}"
+            }
+        },
+        {
+            "name": "standalone",
+            "hidden": true,
+            "cacheVariables": {
+                "CONF_FILE": "${fileDir}/prj.conf;${fileDir}/boards/${env:BOARD}.conf",
+                "DTC_OVERLAY_FILE": "${fileDir}/boards/${env:BOARD}.overlay"
+            }
+        },
+        {
+            "name": "sysbuild",
+            "hidden": true,
+            "cacheVariables": {
+                
+            }
+        },
+        {
+            "name": "debug",
+            "hidden": true,
+            "inherits": "base",
+            "cacheVariables": {
+                "CONFIG_DEBUG": "y",
+                "${env:APP_NAME_PREFIX}CONFIG_DEBUG_THREAD_INFO": "y",
+                "${env:APP_NAME_PREFIX}CONFIG_DEBUG_OPTIMIZATIONS": "y"
+            }
+        },
+        {
+            "name": "release",
+            "hidden": true,
+            "inherits": "base",
+            "cacheVariables": {
+            }
+        }
+    ]
+}
